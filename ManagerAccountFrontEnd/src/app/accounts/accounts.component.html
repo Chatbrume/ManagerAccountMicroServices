@@ -1,0 +1,32 @@
+<div> Search by type:
+  <select name="type" id="type" (change)="getAllAccountsByType($any($event.target).value)">
+    <option selected>ALL</option>
+    <option>CURRENT</option>
+    <option>SPARE</option>
+  </select>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Discount</th>
+    <th scope="col">Created date</th>
+    <th scope="col">Type</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let account of accounts">
+    <td scope="row">{{account.id}}</td>
+    <td><strong [ngClass]="{'text-success': account.discount >= 0, 'text-danger': account.discount < 0}">{{account.discount}}</strong></td>
+    <td>{{account.creationDate}}</td>
+    <td>
+      <kbd [ngClass]="{'text-light': true, 'bg-primary': account.type === 'CURRENT', 'bg-secondary': account.type === 'SPARE'}">{{account.type}}</kbd>
+    </td>
+    <td colspan="2" class="align-middle">
+      <button class="btn btn-success" (click)="getAccount(account.id)">More</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

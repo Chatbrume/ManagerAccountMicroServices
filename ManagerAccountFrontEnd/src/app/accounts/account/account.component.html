@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>Account Form</h1>
+  <form #accountForm="ngForm" (ngSubmit)="update()">
+    <div class="form-group">
+      <label for="id">Id</label>
+      <input type="number" class="form-control" id="id" [(ngModel)]="account.id" name="id" #id="ngModel" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="discount">Discount</label>
+      <input type="number" step=0.01 class="form-control" id="discount" required
+              [(ngModel)]="account.discount" name="discount" #discount="ngModel" [disabled]="disabled">
+      <div [hidden]="discount.valid || discount.pristine" class="alert alert-danger">
+        Discount is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="creationDate">Date creation</label>
+      <input type="date" class="form-control" id="creationDate" required
+              [(ngModel)]="account.creationDate" name="creationDate" #creationDate="ngModel" [disabled]="disabled">
+      <div [hidden]="creationDate.valid || creationDate.pristine" class="alert alert-danger">
+        Creation date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" id="type" required
+              [(ngModel)]="account.type" name="type"
+              #type="ngModel" [disabled]="disabled">
+        <option *ngFor="let type of types" [value]="type">{{type}}</option>
+      </select>
+      <div [hidden]="type.valid || type.pristine" class="alert alert-danger">
+        Type is required
+      </div>
+    </div>
+    <button *ngIf="disabled" type="button" class="btn btn-primary" (click)="disabled=false">Edit</button>
+    <button *ngIf="disabled" type="button" class="btn btn-primary" (click)="confirmDeletion(content)">Delete</button>
+    <button *ngIf="!disabled" type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Do you realy went to delete the account ?</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="d('cancel click')">Cancel</button>
+    <button type="button" ngbAutofocus class="btn btn-danger" (click)="deleteAccount()">Delete</button>
+  </div>
+</ng-template>
