@@ -3,6 +3,9 @@ pipeline {
      environment {
         String branchName = "main"
         String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
+        registry = "chatbrume/manager-account"
+        registryCredential = 'dockerhub'
+        app = ''
     }
     stages {
         stage('Checkout') {
@@ -49,6 +52,36 @@ pipeline {
             }
             
         }
+        /*stage('Docker image build') {
+            steps {
+                script {
+                    echo 'Start building docker image of the application ......'
+                    app = docker.build(registry, "-f ./docker/spring-app/Dockerfile .")
+                    echo 'Docker image build done.'
+                }
+            }
+        }
+        stage('Docker image push on docker hub') {
+            steps {
+                script {
+                    echo 'Pushing the docker image application builded to docker hub.'
+
+                    docker.withRegistry( '', registryCredential ) {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                    
+                    echo 'Docker image build done.'
+                }
+              
+            }
+        }
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry"
+                sh "docker rmi $registrycolumn"
+            }
+        }*/
         stage('confirmation email') {
             steps {
                 emailext attachLog: true, body: 'ManagerAccount jenkins pipeline build finished with success', subject: '[Jenkins] ManagerAccount', to: 'nioche.amelie@gmail.com'
