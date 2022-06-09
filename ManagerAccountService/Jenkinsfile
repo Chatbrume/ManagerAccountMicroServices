@@ -1,0 +1,55 @@
+pipeline {
+	agent any
+    tools {
+    	maven 'maven'
+        jdk 'java-11'
+    }
+
+	stages {
+		stage('Git') {
+			node {
+				git url: 'https://github.com/Chatbrume/ManagerAccountMicroServices'
+				sh 'make all'
+				sh 'cd ManagerAccountService'
+			}
+		}
+		stage('Build') {
+			steps {
+				echo 'Building..'
+				sh("mvn clean package")
+			}
+			post {
+                success {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+		}
+		stage('Show properties') {
+			steps {
+				echo 'src'
+				sh("cat src/main/resources/bootstrap.properties")
+			}
+			steps {
+				echo 'test'
+				sh("cat src/test/resources/test.properties")
+			}
+		}
+		stage('Test') {
+			steps {
+				echo 'Testing..'
+				sh("mvn test")
+				echo 'The results are in:'
+				echo '    target/surefire-reports'
+				echo '    target/site/jacoco'
+			}
+		}
+		stage('Documentation') {
+			steps {
+				echo 'Générate javadoc..'
+				sh("mvn javadoc:javadoc")
+				echo 'The result is in:'
+				echo '    target/site/apidoc'
+			}
+		}
+	}
+}

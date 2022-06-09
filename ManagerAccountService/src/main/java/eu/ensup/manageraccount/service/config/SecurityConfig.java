@@ -20,12 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/login", "/").permitAll()
+        http.headers().frameOptions().sameOrigin().and().authorizeRequests()
+                .antMatchers("/login", "/", "/accounts", "/accounts/**").permitAll()
                 /*.antMatchers("/accounts", "/accounts/**").hasAnyAuthority(Roles.USER.name(),Roles.ADMIN.name())
                 .antMatchers("/actuator", "/actuator/**", "/swagger/**").hasAuthority(Roles.ADMIN.name())
                 .anyRequest().authenticated()*/
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 /*.and()
                 .formLogin()
                 .defaultSuccessUrl("/accounts/", true)

@@ -11,3 +11,5 @@ spring.cloud.gateway.globalcors.cors-configurations.[/**].allowedOrigins="http:/
 spring.cloud.gateway.globalcors.cors-configurations.[/**].allowedHeaders="*"
 spring.cloud.gateway.globalcors.cors-configurations.[/**].allowedMethods=*
 ```
+
+Ce fichier sera publier par ManagerAccountConfig puis utiliser dans cette application.

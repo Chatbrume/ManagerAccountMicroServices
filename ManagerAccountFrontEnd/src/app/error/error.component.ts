@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-error',
@@ -8,11 +8,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ErrorComponent implements OnInit
 {
-  code: number = 0;
+  httpError: any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private location: Location) {
+    this.httpError = this.location.getState();
+  }
 
   ngOnInit(): void {
-    this.code = Number(this.route.snapshot.paramMap.get('code'));
+  }
+
+  gotBack() {
+    history.back();
   }
 }

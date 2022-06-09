@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Account } from '../../entity/account';
 import { AccountService } from '../../server/account.service';
@@ -30,28 +31,24 @@ export class AccountComponent implements OnInit
     var id = Number(this.route.snapshot.paramMap.get('id'));
     this.accountService.getAccount(id).subscribe({
       next: (account: Account) => {
-        if( account == null || account.id == null ) this.router.navigate(["error/404"]);
-        else this.account = account
+        if( account != null && account.id != null ) this.account = account
       },
-      error: (err: Error) => {
-        console.error('Error: ' + err);
-        this.router.navigate(["error/404"]);
+      error: (err: HttpErrorResponse) => {
+        this.router.navigateByUrl("error",{state:{name:err.name,message:err.message,status:err.status,statusText:err.statusText,url:err.url}});
       }
     });
 
-    if( this.account.id == null ) this.router.navigate(["error/404"]);
+    if( this.account.id == null ) this.router.navigateByUrl("error");
   }
 
   update() {
     console.log(this.account);
     this.accountService.updateAccount(this.account).subscribe({
       next: (account: Account) => {
-        if( account == null || account.id == null ) this.router.navigate(["error/404"]);
-        else this.account = account
+        if( account != null && account.id != null ) this.account = account
       },
-      error: (err: Error) => {
-        console.error('Error: ' + err.name + " :: " + err.message);
-        this.router.navigate(["error/404"]);
+      error: (err: HttpErrorResponse) => {
+        this.router.navigateByUrl("error",{state:{name:err.name,message:err.message,status:err.status,statusText:err.statusText,url:err.url}});
       }
     });
   }
@@ -60,12 +57,10 @@ export class AccountComponent implements OnInit
     this.modalService.dismissAll();
     this.accountService.deleteAccount(this.account.id).subscribe({
       next: (account: Account) => {
-        if( account == null || account.id == null ) this.router.navigate(["error/404"]);
-        else this.router.navigate(["accounts"]);
+        if( account != null && account.id != null ) this.router.navigate(["accounts"]);
       },
-      error: (err: Error) => {
-        console.error('Error: ' + err);
-        this.router.navigate(["error/"+err.message]);
+      error: (err: HttpErrorResponse) => {
+        this.router.navigateByUrl("error",{state:{name:err.name,message:err.message,status:err.status,statusText:err.statusText,url:err.url}});
       }
     });
   }

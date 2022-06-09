@@ -14,7 +14,7 @@
     <version>1.0</version>
     <name>ManagerAccountProxy</name>
     <description>Demo project for Spring Boot</description>
-    <url>http://localhost:8888</url>
+    <url>http://localhost:8090</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -10,47 +10,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "accounts")
-@CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins="*")
 public class AccountController
 {
     @Autowired
     private AccountRepository accountRepository;
 
-    @CrossOrigin
-    @GetMapping(path = "/")
+    @GetMapping(path = "/", produces="application/json")
     public List<Account> getAll()
     {
         return accountRepository.findAll();
     }
 
-    @CrossOrigin
-    @PostMapping(path = "/")
+    @PostMapping(path = "/", produces="application/json", consumes="application/json")
     public Account create(@RequestBody Account account)
     {
         return accountRepository.save(account);
     }
 
-    @CrossOrigin
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}", produces="application/json")
     public Account get(@PathVariable(name = "id") Integer id)
     {
         return accountRepository.findById(id).orElse(null);
     }
 
-    @CrossOrigin
-    @GetMapping(path = "/byType/{type}")
+    @GetMapping(path = "/byType/{type}", produces="application/json")
     List<Account> findByType(@PathVariable(name="type") TypeAccount type) {return accountRepository.findByType(type);}
 
-    @CrossOrigin
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", produces="application/json", consumes="application/json")
     public Account update(@PathVariable(name = "id") Integer id, @RequestBody Account account)
     {
         account.setId(id);
         return accountRepository.save(account);
     }
 
-    @CrossOrigin
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "{id}", produces="application/json")
     public Account delete(@PathVariable(name = "id") Integer id)
     {
         Account account = accountRepository.findById(id).orElse(null);

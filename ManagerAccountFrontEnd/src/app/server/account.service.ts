@@ -7,6 +7,12 @@ import { Account } from "../entity/account";
 export class AccountService
 {
   private host = "http://localhost:8081/manager-account/";
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    })
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -19,8 +25,8 @@ export class AccountService
   }
 
   createAccount(account: Account): Observable<Account> {
-    const body : string = "{\"discount\":"+account.discount+"\"creationDate\":"+account.creationDate+"\"type\":"+account.type+"}";
-    return this.http.post<Account>(this.host+"accounts",body);
+    const body : string = "{\"discount\":"+account.discount+",\"creationDate\":\""+account.creationDate+"\",\"type\":\""+account.type+"\"}";
+    return this.http.post<Account>(this.host+"accounts",body,this.httpOptions);
   }
 
   getAccount(id: number): Observable<Account> {
@@ -28,8 +34,8 @@ export class AccountService
   }
 
   updateAccount(account: Account): Observable<Account> {
-    const body : string = "{\"id\":"+account.id+"\"discount\":"+account.discount+"\"creationDate\":"+account.creationDate+"\"type\":"+account.type+"}";
-    return this.http.put<Account>(this.host+"accounts/"+account.id, body);
+    const body : string = "{\"id\":"+account.id+",\"discount\":"+account.discount+",\"creationDate\":\""+account.creationDate+"\",\"type\":\""+account.type+"\"}";
+    return this.http.put<Account>(this.host+"accounts/"+account.id,body,this.httpOptions);
   }
 
   deleteAccount(id: number): Observable<Account> {

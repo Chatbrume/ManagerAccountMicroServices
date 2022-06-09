@@ -21,4 +21,15 @@ public class Account
     private Date creationDate;
     @Enumerated(EnumType.STRING)
     private TypeAccount type;
+
+    public Account(Integer id, int discount, Date creationDate, TypeAccount type) {
+        this.id = id;
+        this.discount = new Double(discount);
+        this.creationDate = creationDate;
+        this.type = type;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = new Double(discount);
+    }
 }

@@ -1,1 +1,8 @@
-<p>error works!</p>
+<button (click)="gotBack()"><- return before the error</button>
+<br/>
+<br/>
+<br/>
+<h1>{{httpError.status}}: {{httpError.statusText}}</h1>
+<h2 hidden>{{httpError.name}}</h2>
+<br/>
+<p>{{httpError.message}}</p>
