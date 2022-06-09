@@ -1,55 +1,92 @@
 pipeline {
-	agent any
-    tools {
-    	maven 'maven'
-        jdk 'java-11'
+    agent any
+     environment {
+        String branchName = "main"
+        String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
+        registry = "chatbrume/manager-account"
+        registryCredential = 'dockerhub'
+        app = ''
     }
-
-	stages {
-		stage('Git') {
-			node {
-				git url: 'https://github.com/Chatbrume/ManagerAccountMicroServices'
-				sh 'make all'
-				sh 'cd ManagerAccountService'
-			}
-		}
-		stage('Build') {
-			steps {
-				echo 'Building..'
-				sh("mvn clean package")
-			}
-			post {
-                success {
-                    junit '**/target/surefire-reports/*.xml'
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    sh("pwd")
+                    sh("ls -ahl")
+                    echo 'Cloning files from (branch: "' + branchName + '" )'
+                    echo 'Start cloning the github repository from (branch: "' + branchName + ' ") .....'
+                    // The below will clone your repo and will be checked out to master branch by default.
+                    git branch: branchName, url: repoUrl
+                    sh("ls -ahl")
+                    echo 'repository clone on branch master done.'
                 }
             }
-		}
-		stage('Show properties') {
-			steps {
-				echo 'src'
-				sh("cat src/main/resources/bootstrap.properties")
-			}
-			steps {
-				echo 'test'
-				sh("cat src/test/resources/test.properties")
-			}
-		}
-		stage('Test') {
-			steps {
-				echo 'Testing..'
-				sh("mvn test")
-				echo 'The results are in:'
-				echo '    target/surefire-reports'
-				echo '    target/site/jacoco'
-			}
-		}
-		stage('Documentation') {
-			steps {
-				echo 'Générate javadoc..'
-				sh("mvn javadoc:javadoc")
-				echo 'The result is in:'
-				echo '    target/site/apidoc'
-			}
-		}
-	}
+        }
+        stage('Test') {
+            agent {
+                docker { 
+                    image 'maven:3.8.4-openjdk-11-slim' 
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    echo 'starting spring boot application unit test .....'
+                    sh("mvn test")
+                    echo 'spring boot application unit tests passed'
+                }
+            }
+        }
+        stage('generate javadoc') {
+            agent {
+                docker { 
+                    image 'maven:3.8.4-openjdk-11-slim' 
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    echo 'starting spring boot application unit test .....'
+                    sh("mvn javadoc:javadoc")
+                    echo 'spring boot application unit tests passed'
+                }
+            }
+            
+        }
+        /*stage('Docker image build') {
+            steps {
+                script {
+                    echo 'Start building docker image of the application ......'
+                    app = docker.build(registry, "-f ./docker/spring-app/Dockerfile .")
+                    echo 'Docker image build done.'
+                }
+            }
+        }
+        stage('Docker image push on docker hub') {
+            steps {
+                script {
+                    echo 'Pushing the docker image application builded to docker hub.'
+
+                    docker.withRegistry( '', registryCredential ) {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                    
+                    echo 'Docker image build done.'
+                }
+              
+            }
+        }
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry"
+                sh "docker rmi $registrycolumn"
+            }
+        }
+        stage('confirmation email') {
+            steps {
+                emailext attachLog: true, body: 'A test email : gestion Ecole\'s jenkins pipeline build finished with success', subject: 'test email', to: 'lacomblez.thomas@gmail.com'
+            }
+        }*/
+    }
 }
