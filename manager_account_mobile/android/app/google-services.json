@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1090500662844",
+    "project_id": "manager-account-connexion",
+    "storage_bucket": "manager-account-connexion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090500662844:android:0086477c7cdb9fa2215539",
+        "android_client_info": {
+          "package_name": "eu.ensup.manageraccount.mobile.manager_account_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090500662844-roucqom9avb8mhqrrmlai5hbfjdrq7oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpBSofme4lhpZMqjIZcKcq63yCPQZRGUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090500662844-roucqom9avb8mhqrrmlai5hbfjdrq7oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
