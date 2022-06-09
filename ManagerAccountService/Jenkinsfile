@@ -82,11 +82,11 @@ pipeline {
                 sh "docker rmi $registry"
                 sh "docker rmi $registrycolumn"
             }
-        }
+        }*/
         stage('confirmation email') {
             steps {
-                emailext attachLog: true, body: 'A test email : gestion Ecole\'s jenkins pipeline build finished with success', subject: 'test email', to: 'lacomblez.thomas@gmail.com'
+                emailext attachLog: true, body: 'ManagerAccount jenkins pipeline build finished with success', subject: '[Jenkins] ManagerAccount', to: 'nioche.amelie@gmail.com'
             }
-        }*/
+        }
     }
 }
