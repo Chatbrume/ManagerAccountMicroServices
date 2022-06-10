@@ -24,8 +24,7 @@ pipeline {
                 script {
                     echo 'Execute all test...'
                     withMaven {
-                        bat "cd ManagerAccountService"
-                        bat "mvn clean test"
+                        bat "mvn -f ManagerAccountService/pom.xml clean test"
                     }
                     echo 'End of the execution'
                 }
