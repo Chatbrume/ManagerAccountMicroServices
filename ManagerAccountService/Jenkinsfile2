@@ -3,57 +3,6 @@ pipeline {
      environment {
         String branchName = "main"
         String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    echo 'Cloning the "'+branchName+'" branch from "'+repoUrl+'".'
-                    echo 'Start cloning the github repository...'
-                    git branch: branchName, url: repoUrl
-                    echo 'repository clone on branch master done.'
-                    sh("cd ManagerAccountMicroServices")
-                }
-            }
-        }
-        stage('Test') {
-            steps {
-                script {
-                    echo 'Execute all test...'
-                    sh("mvn test")
-                    echo 'End of the execution'
-                }
-            }
-        }
-        stage('generate javadoc') {
-            agent {
-                docker {
-                    image 'maven:3.8.4-openjdk-11-slim'
-                    reuseNode true
-                }
-            }
-            steps {
-                script {
-                    echo 'Generation of the javadoc...'
-                    sh("mvn javadoc:javadoc")
-                    echo 'The javadoc have been generated !'
-                }
-            }
-
-        }
-        stage('confirmation email') {
-            steps {
-                emailext attachLog: true, body: 'ManagerAccount jenkins pipeline build finished with success', subject: '[Jenkins] ManagerAccount', to: 'nioche.amelie@gmail.com'
-                echo 'An email have been send ! Consult your email adress !'
-            }
-        }
-    }
-},
-pipeline {
-    agent any
-     environment {
-        String branchName = "main"
-        String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
         registry = "chatbrume/manager-account"
         registryCredential = 'dockerhub'
         app = ''
