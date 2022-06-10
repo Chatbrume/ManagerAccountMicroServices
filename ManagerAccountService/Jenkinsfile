@@ -12,7 +12,6 @@ pipeline {
                     echo 'Start cloning the github repository...'
                     git branch: branchName, url: repoUrl
                     echo 'repository clone on branch master done.'
-                    bat("cd ManagerAccountMicroServices")
                 }
             }
         }
