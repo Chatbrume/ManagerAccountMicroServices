@@ -13,7 +13,7 @@ pipeline {
         {
             steps
             {
-                sh 'ls'
+                sh 'dir'
                 sh 'mvn clean compile'
             }
         }
