@@ -7,7 +7,7 @@ microservice | port | url
 -------------|-----:|----
 ManagerAccountConfig | 8888 | [http://localhost:8888](http://localhost:8888)
 ManagerAccountRegister | 8761 | [http://localhost:8761](http://localhost:8761)
-ManagerAccountProxy | 8090 | [http://localhost:8888](http://localhost:8090)
+ManagerAccountProxy | 8090 | [http://localhost:8090](http://localhost:8090)
 ManagerAccountService | 8081 | [http://localhost:8081](http://localhost:8081)
 ManagerAccountFrontEnd | 4200 | [http://localhost:4200](http://localhost:4200)
 

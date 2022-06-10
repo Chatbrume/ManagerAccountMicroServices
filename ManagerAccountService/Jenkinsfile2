@@ -85,6 +85,7 @@ pipeline {
         stage('confirmation email') {
             steps {
                 emailext attachLog: true, body: 'ManagerAccount jenkins pipeline build finished with success', subject: '[Jenkins] ManagerAccount', to: 'nioche.amelie@gmail.com'
+
                 echo 'An email have been send ! Consult your email adress !'
             }
         }
