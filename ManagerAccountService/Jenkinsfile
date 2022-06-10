@@ -1,6 +1,10 @@
 pipeline {
     agent any
-     environment {
+    tools {
+        maven 'apache-maven-3.6.3'
+        jdk 'jdk8'
+    }
+    environment {
         String branchName = "main"
         String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
     }
