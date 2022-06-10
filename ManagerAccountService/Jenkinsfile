@@ -24,6 +24,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh("cd ManagerAccountMicroServices")
                     echo 'Execute all test...'
                     sh("mvn test")
                     echo 'End of the execution'
