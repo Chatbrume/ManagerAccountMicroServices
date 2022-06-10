@@ -22,6 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
+                    bat "cd ManagerAccountService"
                     echo 'Execute all test...'
                     withMaven {
                         bat "mvn clean test"
