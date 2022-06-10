@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'apache-maven-3.6.3'
-        jdk 'jdk8'
+        maven 'MavenInstallation'
+        jdk 'JDK_1.8_221'
     }
     environment {
         String branchName = "main"
