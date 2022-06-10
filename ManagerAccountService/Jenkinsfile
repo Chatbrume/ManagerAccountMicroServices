@@ -5,14 +5,6 @@ pipeline {
         String repoUrl = "https://github.com/Chatbrume/ManagerAccountMicroServices.git"
     }
     stages {
-        stage('Change to linux') {
-            steps {
-                script {
-                    echo 'Change to linux'
-                    bat('wsl -u ubuntu')
-                }
-            }
-        }
         stage('Checkout') {
             steps {
                 script {
@@ -24,16 +16,12 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                docker {
-                    image 'maven:3.8.4-openjdk-11-slim'
-                    reuseNode true
-                }
-            }
             steps {
                 script {
                     echo 'Execute all test...'
-                    sh("mvn test")
+                    withMaven {
+                        bat "mvn clean test"
+                    }
                     echo 'End of the execution'
                 }
             }
@@ -42,7 +30,9 @@ pipeline {
             steps {
                 script {
                     echo 'Generation of the javadoc...'
-                    sh("mvn javadoc:javadoc")
+                    withMaven {
+                        bat "mvn javadoc:javadoc"
+                    }
                     echo 'The javadoc have been generated !'
                 }
             }
