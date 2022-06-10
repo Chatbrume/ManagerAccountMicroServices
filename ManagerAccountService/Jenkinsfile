@@ -8,11 +8,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    sh("ls -ahl")
                     echo 'Cloning the "'+branchName+'" branch from "'+repoUrl+'".'
                     echo 'Start cloning the github repository...'
                     git branch: branchName, url: repoUrl
-                    sh("ls -ahl")
                     echo 'repository clone on branch master done.'
                 }
             }
