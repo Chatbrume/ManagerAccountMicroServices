@@ -13,8 +13,7 @@ pipeline {
         {
             steps
             {
-                sh 'dir'
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
         stage('Test')
@@ -25,7 +24,7 @@ pipeline {
                 {
                     try
                     {
-                        sh 'mvn test'
+                        bat 'mvn test'
                     }
                     finally
                     {
@@ -37,7 +36,7 @@ pipeline {
 
         stage('Docs') {
             steps{
-                sh 'mvn javadoc:javadoc'
+                bat 'mvn javadoc:javadoc'
             }
         }
     }
