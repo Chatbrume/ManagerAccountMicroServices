@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     echo 'Change to linux'
-                    bat('wsl')
+                    bat('wsl -u ubuntu')
                 }
             }
         }
