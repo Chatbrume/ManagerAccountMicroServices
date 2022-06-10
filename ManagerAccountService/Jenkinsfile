@@ -35,7 +35,7 @@ pipeline {
                 script {
                     echo 'Generation of the javadoc...'
                     withMaven {
-                        bat "mvn javadoc:javadoc"
+                        bat "mvn -f ManagerAccountService/pom.xml javadoc:javadoc"
                     }
                     echo 'The javadoc have been generated !'
                 }
